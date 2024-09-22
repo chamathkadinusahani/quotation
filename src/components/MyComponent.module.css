@@ -1,7 +1,8 @@
 .login {
-  background-color: rgba(255, 255, 255, 1);
+  background-image: linear-gradient(to right, #ffffff, #c5aa7b);
   display: flex;
   flex-direction: column;
+  
 }
 .div {
   display: flex;
@@ -124,14 +125,14 @@
 }
 @media (max-width: 991px) {
   .div5 {
-    max-width: 100%;
-    margin-top: 40px;
+    max-width:90%;
+    margin-top: 50px;
   }
 }
 .sendQuotation {
   color: rgba(0, 0, 0, 1);
   align-self: center;
-  font: 500 40px/0.5 Abhaya Libre Medium, -apple-system, Roboto,
+  font: 500 36px/0.5 Abhaya Libre Medium, -apple-system, Roboto,
     Helvetica, sans-serif;
 }
 .inputFieldWithLabel {
@@ -154,7 +155,7 @@
   color: var(--Ink-Normal, #252a31);
   white-space: nowrap;
   padding: 0 2px;
-  font: 800 32px/1 Abhaya Libre ExtraBold, -apple-system, Roboto,
+  font: 800 28px/1 Abhaya Libre ExtraBold, -apple-system, Roboto,
     Helvetica, sans-serif;
 }
 @media (max-width: 991px) {
@@ -196,7 +197,7 @@
 }
 .inputFieldWithLabel2 {
   display: flex;
-  margin-top: 23px;
+  margin-top: 3px;
   min-height: 332px;
   width: 100%;
   flex-direction: column;
@@ -216,6 +217,8 @@
 .label2 {
   gap: 10px;
   padding: 0 2px;
+  font: 800 28px/1 Abhaya Libre ExtraBold, -apple-system, Roboto,
+    Helvetica, sans-serif;
 }
 @media (max-width: 991px) {
   .label2 {
@@ -235,7 +238,7 @@
   gap: 8px;
   overflow: hidden;
   justify-content: start;
-  padding: 12px;
+  padding: 1px;
 }
 @media (max-width: 991px) {
   .inputField2 {
@@ -256,7 +259,7 @@
 .div6 {
   align-self: center;
   display: flex;
-  margin-top: 41px;
+  margin-top: 40px;
   width: 100%;
   max-width: 1273px;
   align-items: start;
@@ -286,13 +289,15 @@
 .button {
   border-radius: 6px;
   background-color: rgba(192, 136, 37, 0.86);
-  margin-top: 10px;
+  margin-top: -251px;
   min-height: 49px;
   overflow: hidden;
   color: var(--White, #fff);
   text-align: center;
   padding: 2px 110px 10px;
-  padding-left: 10%;
+  padding-left: 9%;
+  padding-right: 9%;
+  margin-left: -30px;
   
   
   
@@ -301,8 +306,9 @@
 }
 @media (max-width: 991px) {
   .button {
-    max-width: 20%;
-    padding-right: 20px;
+    max-width: 100%;
+    padding-right: 30px 30px;
+    margin-left: 50px;
   }
 }
 .realizeYourVision {
