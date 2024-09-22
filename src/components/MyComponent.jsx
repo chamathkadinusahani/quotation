@@ -50,7 +50,7 @@ export default function MyComponent() {
             <div className={styles.gloriusTextileHasBeenTheGoToCompanySinceThe80S}>
               GLORIUS TEXTILE HAS BEEN THE GO-TO COMPANY SINCE THE 80'S.
             </div>
-            <div className={styles.button}>send a quotation</div>
+            <button type="submit" className={styles.button}>send a quotation</button>
           </div>
           <div className={styles.realizeYourVision}>REALIZE YOUR VISION</div>
         </div>
