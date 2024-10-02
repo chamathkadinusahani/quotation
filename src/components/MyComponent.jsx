@@ -1,45 +1,121 @@
-const express = require('express');
-const nodemailer = require('nodemailer');
-const bodyParser = require('body-parser');
+import * as React from "react";
+import { useState } from 'react';
+import axios from 'axios'; // Import Axios for making API requests
+import styles from './MyComponent.module.css';
+import Footer from './Footer';
+import './Footer.css';
+import Header1 from './Header1';
 
-const app = express();
-const PORT = 5000;
+export default function MyComponent() {
+  const [email, setEmail] = useState("");
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state
+  const [errorMessage, setErrorMessage] = useState(""); // Error message state
 
-app.use(bodyParser.json());
-
-// Root route for testing the server
-app.get('/', (req, res) => {
-  res.send('Welcome to the Quotation API');
-});
-
-// Nodemailer configuration
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'glorioustextile225@gmail.com', // replace with your email
-    pass: 'Glorious@12', // replace with your email password
-  },
-});
-
-// Endpoint to send email
-app.post('/send-email', (req, res) => {
-  const { email, description } = req.body;
-
-  const mailOptions = {
-    from: email,
-    to: 'glorioustextile225@gmail.com',
-    subject: 'Quotation Request',
-    text: description,
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage(""); // Clear previous error messages
+  
+    // Validate email format
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
+  
+    // Validate description length
+    if (description.length < 10) {
+      setErrorMessage("Description must be at least 10 characters long.");
+      return;
+    }
+  
+    setLoading(true); // Show loading state
+  
+    try {
+      // Use axios to send the POST request to the backend
+      const response = await axios.post('http://localhost:5000/request-email', {
+        email,
+        description,
+      });
+  
+      if (response.status === 200) {
+        alert("Quotation request sent successfully!");
+        setEmail(""); // Clear fields
+        setDescription("");
+      } else {
+        alert("Failed to send quotation request. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error sending request:", error.response ? error.response.data : error.message);
+      alert("There was an error submitting your request.");
+    }
+  
+    setLoading(false); // Hide loading state
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return res.status(500).send(error.toString());
-    }
-    res.status(200).send('Email sent: ' + info.response);
-  });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${5000}`);
-});
+  return (
+    <>
+      <div className={styles.login}>
+        <div className={styles.div}>
+          <Header1 />
+          <div className={styles.div3}>
+            <div className={styles.div4}>
+              <div className={styles.column}>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/d7f99b99893dd9e06a74c7e501dccb2770bfbdb8de8253938cbd597b350b83a7"
+                  className={styles.img}
+                />
+              </div>
+              <div className={styles.column2}>
+                <img
+                  loading="lazy"
+                  srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/fb0f4408458057004673e69632b769a14759e57120a7e7f5f72d67e709448500"
+                  className={styles.img2}
+                />
+              </div>
+              <div className={styles.column3}>
+                <div className={styles.div5}>
+                  <div className={styles.requestQuotation}>REQUEST A QUOTATION</div>
+                  {errorMessage && <div className={styles.error}>{errorMessage}</div>} {/* Show error message */}
+                  <div className={styles.inputFieldWithLabel}>
+                    <div className={styles.label}>Email</div>
+                    <input
+                      type="email"
+                      className={styles.inputField}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                    <div className={styles.wrapper} />
+                  </div>
+                  <div className={styles.inputFieldWithLabel2}>
+                    <div className={styles.label2}>Description</div>
+                  </div>
+                  <input
+                    type="text"
+                    className={styles.inputField2}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    required
+                  />
+                  <div className={styles.wrapper2} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.div6}>
+            <div className={styles.gloriusTextileHasBeenTheGoToCompanySinceThe80S}>
+              GLORIUS TEXTILE HAS BEEN THE GO-TO COMPANY SINCE THE 80'S.
+            </div>
+            <button type="submit" className={styles.button} onClick={handleSubmit} disabled={loading}>
+              {loading ? "Sending..." : "Request a Quotation"}
+            </button>
+          </div>
+          <div className={styles.realizeYourVision}>REALIZE YOUR VISION</div>
+        </div>
+        <Footer />
+      </div>
+    </>
+  );
+}
