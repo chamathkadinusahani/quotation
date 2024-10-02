@@ -1,42 +1,45 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-app.use(cors());
+const PORT = 5000;
+
 app.use(bodyParser.json());
 
-app.post('/send-quotation', (req, res) => {
+// Root route for testing the server
+app.get('/', (req, res) => {
+  res.send('Welcome to the Quotation API');
+});
+
+// Nodemailer configuration
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'glorioustextile225@gmail.com', // replace with your email
+    pass: 'Glorious@12', // replace with your email password
+  },
+});
+
+// Endpoint to send email
+app.post('/send-email', (req, res) => {
   const { email, description } = req.body;
 
-  // Set up Nodemailer transport
-  let transporter = nodemailer.createTransport({
-    service: 'Gmail',  // You can use other services like Outlook, etc.
-    auth: {
-      user: 'your-email@gmail.com',  // Replace with your email
-      pass: 'your-email-password',   // Replace with your email password or app-specific password
-    },
-  });
-
-  // Set up email data
-  let mailOptions = {
-    from: email, // Sender's email
-    to: 'info@gloriousfabric.lk', // Recipient email
+  const mailOptions = {
+    from: email,
+    to: 'glorioustextile225@gmail.com',
     subject: 'Quotation Request',
-    text: `You have received a new quotation request.\n\nEmail: ${email}\nDescription: ${description}`,
+    text: description,
   };
 
-  // Send email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return res.status(500).send({ message: 'Error sending email', error });
+      return res.status(500).send(error.toString());
     }
-    res.status(200).send({ message: 'Email sent successfully', info });
+    res.status(200).send('Email sent: ' + info.response);
   });
 });
 
-const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server is running on http://localhost:${5000}`);
 });
